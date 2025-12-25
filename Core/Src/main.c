@@ -142,9 +142,9 @@ int main(void)
     motor4_speed_rpm=motor4->speed_rpm;
     motor4_speed_rpm/=19;
     //获取当前速度
-    targetx_speed_rpm=rc.ch1;
-    targety_speed_rpm=rc.ch2;
-    targetw_speed_rpm=rc.sw1-rc.sw2;
+    targetx_speed_rpm=rc.ch3;
+    targety_speed_rpm=rc.ch4;
+    targetw_speed_rpm=(rc.sw1-2)*200;
     //遥控器数据获取
     target1_speed_rpm=-targetx_speed_rpm-targety_speed_rpm+targetw_speed_rpm;
     target2_speed_rpm=+targetx_speed_rpm-targety_speed_rpm+targetw_speed_rpm;
