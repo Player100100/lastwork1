@@ -144,7 +144,7 @@ int main(void)
     //获取当前位置
     targetx_speed_rpm=rc.ch1;
     targety_speed_rpm=rc.ch2;
-    targetw_speed_rpm=rc.sw1;
+    targetw_speed_rpm=rc.sw1-rc.sw2;
     target1_speed_rpm=-targetx_speed_rpm-targety_speed_rpm+targetw_speed_rpm;
     target2_speed_rpm=+targetx_speed_rpm-targety_speed_rpm+targetw_speed_rpm;
     target3_speed_rpm=+targetx_speed_rpm+targety_speed_rpm+targetw_speed_rpm;
