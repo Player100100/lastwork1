@@ -141,25 +141,28 @@ int main(void)
     const motor_measure_t *motor4=get_chassis_motor_measure_point(3);
     motor4_speed_rpm=motor4->speed_rpm;
     motor4_speed_rpm/=19;
-    //获取当前位置
+    //获取当前速度
     targetx_speed_rpm=rc.ch1;
     targety_speed_rpm=rc.ch2;
     targetw_speed_rpm=rc.sw1-rc.sw2;
+    //遥控器数据获取
     target1_speed_rpm=-targetx_speed_rpm-targety_speed_rpm+targetw_speed_rpm;
     target2_speed_rpm=+targetx_speed_rpm-targety_speed_rpm+targetw_speed_rpm;
     target3_speed_rpm=+targetx_speed_rpm+targety_speed_rpm+targetw_speed_rpm;
     target4_speed_rpm=-targetx_speed_rpm+targety_speed_rpm+targetw_speed_rpm;
+    //四个麦轮计算
     motor1out=(int16_t)pid_calc(&motor_pid,target1_speed_rpm,motor1_speed_rpm);
-    motor2out=(int16_t)pid_calc(&motor_pid,target2_speed_rpm,motor1_speed_rpm);
-    motor3out=(int16_t)pid_calc(&motor_pid,target3_speed_rpm,motor1_speed_rpm);
-    motor4out=(int16_t)pid_calc(&motor_pid,target4_speed_rpm,motor1_speed_rpm);
+    motor2out=(int16_t)pid_calc(&motor_pid,target2_speed_rpm,motor2_speed_rpm);
+    motor3out=(int16_t)pid_calc(&motor_pid,target3_speed_rpm,motor3_speed_rpm);
+    motor4out=(int16_t)pid_calc(&motor_pid,target4_speed_rpm,motor4_speed_rpm);
     //PID计算（使用的pid.c经过改造可以实现处理角度环绕）
-    //CAN_cmd_chassis(motor1out,motor2out,motor3out,motor4out);
-    CAN_cmd_chassis(300,300,300,300);
+    CAN_cmd_chassis(motor1out,motor2out,motor3out,motor4out);
+    //CAN_cmd_chassis(300,300,300,300);//测试用
     HAL_Delay(1);
     HAL_GPIO_WritePin(GPIOG,GPIO_PIN_3,GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOG,GPIO_PIN_4,GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOG,GPIO_PIN_5,GPIO_PIN_SET);
+    //LED为测试CAN协议用
   }
   /* USER CODE END 3 */
 }
